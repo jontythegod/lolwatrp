@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CitizenFX.Core;
-
+using lolwat.Client.Helpers;
 using static CitizenFX.Core.Native.API;
 
 namespace lolwatrp.Client
@@ -25,13 +25,12 @@ namespace lolwatrp.Client
             TriggerServerEvent("LWRP_OnPlayerConnected", PlayerId());
         }
 
-        public void LWRP_Handshake([FromSource] string payload)
-        {
-            Debug.WriteLine("Payload received by client: " + payload);
+        public void LWRP_Handshake(string payload)
+        { 
+            Debug.WriteLine("Received data: " + payload);
 
             // Spawn me in bitch
-            //Exports["spawnmanager:setAutoSpawn"](false);
-            //Exports["spawnmanager:forceRespawn"]();
+            SpawnHelper.SpawnPlayer("player_three", -262.849f, 793.404f, 118.087f, 0.0f);
         }
     }
 }

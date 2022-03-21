@@ -22,8 +22,9 @@ namespace lolwatrp.Server
 
         public void LWRP_OnPlayerConnected([FromSource] Player pl, int identifier)
         {
-            Debug.WriteLine("Client initial heartbeat from ID: " + identifier + "(" + pl.Name + ")");
-            TriggerClientEvent(pl, "LWRP_Handshake", "test|test2");
+            Debug.WriteLine("Client initial heartbeat from license: " + pl.Identifiers["license"] + " (" + pl.Name + ")");
+
+            TriggerClientEvent(pl, "LWRP_Handshake", "license=" + pl.Identifiers["license"] + "&realname=Jim_Rayson");
         }
     }
 }
