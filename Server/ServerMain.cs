@@ -11,20 +11,19 @@ namespace lolwatrp.Server
     {
         public ServerMain()
         {
-            EventHandlers["LWRP_OnPlayerConnected"] += new Action<int>(LWRP_OnPlayerConnected);
+            EventHandlers["LWRP_OnPlayerConnected"] += new Action<Player, int>(LWRP_OnPlayerConnected);
+            EventHandlers["playerJoining"] += new Action<Player>(LWRP_OnPlayerJoining);
         }
 
-        public void LWRP_OnPlayerConnected(int identifier)
+        public void LWRP_OnPlayerJoining([FromSource] Player pl)
         {
-            Debug.WriteLine("Player connected with uid: " + identifier);
+            Debug.WriteLine(pl.Name + " joined the server.");
+        }
 
-            // Fetch details, do things, trigger pincode auth for fivem id if account exists.
-            // If not exists, trigger backstory setup.
-            // If exists and pincode is legit, fetch data from mysql
-            Dictionary<string, object> data = new Dictionary<string, object>();
-
-            // Send payload to the client script.
-            TriggerClientEvent(Players[identifier], "LWRP_Handshake", data);
+        public void LWRP_OnPlayerConnected([FromSource] Player pl, int identifier)
+        {
+            Debug.WriteLine("Client initial heartbeat from ID: " + identifier + "(" + pl.Name + ")");
+            TriggerClientEvent(pl, "LWRP_Handshake", "test|test2");
         }
     }
 }
